@@ -35,7 +35,9 @@ memorama = {
         }
         setTimeout(() => {  this.reset(); }, 1000);
         this.winner();
+        return;
       }
+      valores.playable=true;
     }
   },
   winner() {
