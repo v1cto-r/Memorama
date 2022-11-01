@@ -15,6 +15,7 @@ valores = {
 memorama = {
   tarjeta(id) {
     if(valores.playable) {
+      valores.playable=false;
       posicion = valores.position[id];
       valor = valores.tarjetasvalues[posicion];
       element = document.getElementById(id);
@@ -32,7 +33,6 @@ memorama = {
           valores.tarjetasleft.splice(index2,1);
           valores.holder=[];
         }
-        valores.playable=false;
         setTimeout(() => {  this.reset(); }, 1000);
         this.winner();
       }
