@@ -16,6 +16,15 @@ valores = {
   mov: 0,
   previous: "",
 }
+
+images = {
+  inuse: [],
+  default: ["img/fruits/","apple.png","banan.png","berry.png","cherry.png","peach.png","pine.png","straw.png","water.png"],
+  assignimg() {
+    this.inuse = this.default;
+  }
+}
+
 memorama = {
   tarjeta(id,img) {
     if(valores.playable) {
@@ -31,14 +40,13 @@ memorama = {
       image.style.transform="rotateY(90deg)";
       setTimeout(() => { 
         if(valores.status==1) {
-          element.innerHTML=valor;
+          element.innerHTML="<img class=\"innerimg\" id=\"imgt"+posicion+"\" src=\""+images.inuse[0]+images.inuse[valor]+"\" alt=\"Carta"+posicion+"\" style=\"transform: rotateY(0deg);\">";
           element.style.border="black solid 2px";
           valores.status=2;
           valores.holder=[posicion,valor,id];
           valores.resets.push(id);
         } else if(valores.status==2) {
-          element.innerHTML=valor;
-          element.style.border="black solid 2px";
+          element.innerHTML="<img class=\"innerimg\" id=\"imgt"+posicion+"\" src=\""+images.inuse[0]+images.inuse[valor]+"\" alt=\"Carta"+posicion+"\" style=\"transform: rotateY(0deg);\">";          element.style.border="black solid 2px";
           valores.status=1;
           valores.resets.push(id);
           if (valor==valores.holder[1]) {
@@ -118,5 +126,8 @@ memorama = {
       j=j+2;
     }
     valores.tarjetasvalues.splice(0,1);
+  },
+  setimages() {
+
   }
 }

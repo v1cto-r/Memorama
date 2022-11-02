@@ -40,14 +40,19 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 140px;
-  width: 90px;
-  margin: 5px;
+  height: 146px;
+  width: 96px;
+  margin: 2px;
   border-radius: 10px;
 }
 
 img {
   transition: ease-in-out 0.15s;
+}
+
+.innerimg {
+  height: 140px;
+  width: 90px;
 }
 
 #header {
