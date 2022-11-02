@@ -27,11 +27,13 @@ memorama = {
       setTimeout(() => { 
         if(valores.status==1) {
           element.innerHTML=valor;
+          element.style.border="black solid 2px";
           valores.status=2;
           valores.holder=[posicion,valor,id];
           valores.resets.push(id);
         } else if(valores.status==2) {
           element.innerHTML=valor;
+          element.style.border="black solid 2px";
           valores.status=1;
           valores.resets.push(id);
           if (valor==valores.holder[1]) {
@@ -66,6 +68,7 @@ memorama = {
       tarjeta = valores.resets[i];
       card = document.getElementById(tarjeta);
       position = tarjeta.replace('t','');
+      card.style.border="";
       card.innerHTML="<img id=\"imgt"+position+"\" src=\"back.png\" alt=\"Carta"+position+"\" style=\"transform: rotateY(90deg);\">";
       this.rotateback(position);
     }

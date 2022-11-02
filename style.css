@@ -37,6 +37,13 @@ body {
 
 .button {
   text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 140px;
+  width: 90px;
+  margin: 5px;
+  border-radius: 10px;
 }
 
 img {
