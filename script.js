@@ -14,10 +14,15 @@ valores = {
   playable: true,
   resets: [],
   mov: 0,
+  previous: "",
 }
 memorama = {
   tarjeta(id,img) {
     if(valores.playable) {
+      if (valores.previous==id) {
+        return
+      }
+      valores.previous=id;
       valores.playable=false;
       posicion = valores.position[id];
       valor = valores.tarjetasvalues[posicion];
