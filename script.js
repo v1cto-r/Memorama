@@ -22,7 +22,7 @@ images = {
   default: ["img/fruits/","apple.png","banan.png","berry.png","cherry.png","peach.png","pine.png","straw.png","water.png"],
   assignimg() {
     this.inuse = this.default;
-    loadimg();
+    this.loadimg();
   },
   loadimg() {
     loader = document.getElementById("loader");
