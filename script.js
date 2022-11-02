@@ -3,6 +3,7 @@ valores = {
     t1:0,t2:1,t3:2,t4:3,t5:4,t6:5,t7:6,t8:7,t9:8,t10:9,t11:10,t12:11,t13:12,t14:13,t15:14,t16:15
   },
   tarjetas: ["t1","t2","t3","t4","t5","t6","t7","t8","t9","t10","t11","t12","t13","t14","t15","t16"],
+  images: ["imgt1","imgt2","imgt3","imgt4","imgt5","imgt6","imgt7","imgt8","imgt9","imgt10","imgt11","imgt12","imgt13","imgt14","imgt15","imgt16"],
   tarjetasnames: ["Carta 1","Carta 2","Carta 3","Carta 4","Carta 5","Carta 6"],
   tarjetasvalues: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
   tarjetasused: [],
@@ -10,34 +11,47 @@ valores = {
   tarjetaslength: 8,
   status: 1,
   holder: [],
-  playable: true
+  playable: true,
+  resets: [],
+  mov: 0,
 }
 memorama = {
-  tarjeta(id) {
+  tarjeta(id,img) {
     if(valores.playable) {
       valores.playable=false;
       posicion = valores.position[id];
       valor = valores.tarjetasvalues[posicion];
       element = document.getElementById(id);
-      if(valores.status==1) {
-        element.innerHTML=valor;
-        valores.status=2;
-        valores.holder=[posicion,valor,id];
-      } else if(valores.status==2) {
-        element.innerHTML=valor;
-        valores.status=1;
-        if (valor==valores.holder[1]) {
-          index = valores.tarjetasleft.indexOf(id);
-          valores.tarjetasleft.splice(index,1);
-          index2 = valores.tarjetasleft.indexOf(valores.holder[2]);
-          valores.tarjetasleft.splice(index2,1);
-          valores.holder=[];
+      image = document.getElementById(img);
+      image.style.transform="rotateY(90deg)";
+      setTimeout(() => { 
+        if(valores.status==1) {
+          element.innerHTML=valor;
+          valores.status=2;
+          valores.holder=[posicion,valor,id];
+          valores.resets.push(id);
+        } else if(valores.status==2) {
+          element.innerHTML=valor;
+          valores.status=1;
+          valores.resets.push(id);
+          if (valor==valores.holder[1]) {
+            index = valores.tarjetasleft.indexOf(id);
+            valores.tarjetasleft.splice(index,1);
+            index2 = valores.tarjetasleft.indexOf(valores.holder[2]);
+            valores.tarjetasleft.splice(index2,1);
+            valores.holder=[];
+            valores.resets=[];
+            valores.playable=true;
+            this.winner();
+            valores.mov+=1;
+            return
+          }
+          valores.mov+=1;
+          setTimeout(() => {  this.resetplay(); }, 650);
+          return;
         }
-        setTimeout(() => {  this.reset(); }, 1000);
-        this.winner();
-        return;
-      }
-      valores.playable=true;
+        valores.playable=true;
+      }, 150)
     }
   },
   winner() {
@@ -47,13 +61,30 @@ memorama = {
     header = document.getElementById("header");
     header.innerHTML="Winner!"
   },
+  resetplay() {
+    for(let i=0;i<valores.resets.length;i++){
+      tarjeta = valores.resets[i];
+      card = document.getElementById(tarjeta);
+      position = tarjeta.replace('t','');
+      card.innerHTML="<img id=\"imgt"+position+"\" src=\"back.png\" alt=\"Carta"+position+"\" style=\"transform: rotateY(90deg);\">";
+      this.rotateback(position);
+    }
+    valores.resets=[];
+    valores.playable=true;
+  },
   reset() {
     for(let i=0;i<valores.tarjetasleft.length;i++) {
       tarjeta = document.getElementById(valores.tarjetasleft[i]);
-      position = valores.position[valores.tarjetasleft[i]];
-      tarjeta.innerHTML="<img src=\"back.png\" alt=\"Carta"+position+"\">";
+      position = valores.position[valores.tarjetasleft[i]]+1;
+      tarjeta.innerHTML="<img id=\"imgt"+position+"\" src=\"back.png\" alt=\"Carta"+position+"\" style=\"transform: rotateY(90deg);\">";
+      image = document.getElementById("imgt"+position);
+      this.rotateback(image);
     }
     valores.playable=true;
+  },
+  rotateback(image) {
+    image = document.getElementById("imgt"+position);
+    setTimeout(() => {  image.style.transform="rotateY(0deg)"; }, 150);
   },
   empezar() {
     for (let i=0;i<8;i++) {
