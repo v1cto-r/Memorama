@@ -22,6 +22,13 @@ images = {
   default: ["img/fruits/","apple.png","banan.png","berry.png","cherry.png","peach.png","pine.png","straw.png","water.png"],
   assignimg() {
     this.inuse = this.default;
+    loadimg();
+  },
+  loadimg() {
+    loader = document.getElementById("loader");
+    for(let i=1;i<this.inuse.length;i++) { 
+      loader.innerHTML="<img src=\""+this.inuse[0]+this.inuse[i]+"\">"
+    }
   }
 }
 
